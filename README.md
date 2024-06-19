@@ -12,6 +12,8 @@ With app/components/SearchORIGINAL.js the clicked photo opens
 in a new page rather than a modal.
 
 deployed:
+    https://flickr-pic-search.vercel.app/
+    
     
 
 
