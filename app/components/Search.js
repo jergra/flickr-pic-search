@@ -177,14 +177,39 @@ const Search = () => {
           display: flex;
           justify-content: space-between;
         }
+        @media only screen and (max-width: 900px) {
+         .formAndButtonsContainer  {
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            height: 80px;
+            align-items: center;
+          }
+        }
         .buttonsContainer {
           width: 30%;
           display: flex;
           justify-content: space-between;
         }
+        @media only screen and (max-width: 900px) {
+         .buttonsContainer  {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+          }
+        }
         .formContainer {
-          position: relative;
-          width: 50%;
+          width: 70%;
+          display: flex;
+        }
+        @media only screen and (max-width: 900px) {
+         .formContainer  {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+          }
         }
         input {
           font-size: 18px;
@@ -255,8 +280,6 @@ const Search = () => {
             background-color: rgb(194,65,12);
         }
         .buttonInput {
-          position: absolute;
-          left: 265px;
         }
         div:hover {
             cursor: pointer;

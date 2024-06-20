@@ -13,7 +13,14 @@ in a new page rather than a modal.
 
 deployed:
     https://flickr-pic-search.vercel.app/
-    
+
+
+to do:
+
+make css adjustments for narrow screen
+
+be able to move from one photo to the next in modal mode
+
     
 
 
