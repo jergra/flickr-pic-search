@@ -20,16 +20,31 @@ const Search = () => {
   const [query, setQuery] = useState('');
   const [photos, setPhotos] = useState([]);
   const [photo, setPhoto] = useState({})
+  const [theIndex, setTheIndex] = useState(null)
 
   const [modalIsOpen, setIsOpen] = useState(false);
   
-  function openModal(photo) {
+  function openModal(photo, index) {
     setIsOpen(true);
     setPhoto(photo)
-    console.log('photo:', photo)
+    setTheIndex(index)
   }
   function closeModal() {
     setIsOpen(false);
+  }
+
+  const handleNext = () => {
+    if (theIndex < photos.length - 1) {
+      setPhoto(photos[theIndex + 1])
+      setTheIndex(theIndex + 1)
+    }
+  }
+  
+  const handlePrevious = () => {
+    if (theIndex > 0) {
+      setPhoto(photos[theIndex - 1])
+      setTheIndex(theIndex - 1)
+    }
   }
   
   const truncateTitle = (text) => {
@@ -142,7 +157,7 @@ const Search = () => {
       <div className='grid'>
         {photos.length > 0 && photos.map((photo, index) => (
           <div key={index}>
-            <a onClick={()=>openModal(photo)}>
+            <a onClick={()=>openModal(photo, index)}>
               <img src={photo.src} alt={photo.title} />
               <p>{photo.title}</p>
             </a>
@@ -166,6 +181,11 @@ const Search = () => {
           <h1 className="h1Modal">{truncateTitle(photo.title)}</h1>
           <div className="description">{truncateDescription(photo.description)}</div>
           <div className="dateupload">Uploaded: {photo.dateupload}</div>
+          <div className="nextButtonsContainer">
+            <button className="previous" onClick={()=>handlePrevious()}>Previous</button>
+            <button className="next" onClick={()=>handleNext()}>Next</button>
+          </div>
+          
         </div>
       </Modal>
 
@@ -197,7 +217,7 @@ const Search = () => {
          .buttonsContainer  {
             width: 100%;
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
           }
         }
         .formContainer {
@@ -208,12 +228,14 @@ const Search = () => {
          .formContainer  {
             width: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
           }
         }
         input {
           font-size: 18px;
           padding: 2px 8px;
+          margin-right: 5px;
           border: none;
           border-radius: 5px;
           background-color: #eee;
@@ -230,6 +252,7 @@ const Search = () => {
           gap: 1rem;
         }
         .modal {
+          position: relative;
           background-color: #111;
           position: relative;
           height: 90vh;
@@ -255,6 +278,22 @@ const Search = () => {
           margin-top: 2rem;
           font-size: 20px;
         }
+        .nextButtonsContainer {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+        }
+        .next {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+        }
+        .previous {
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+        }
         .description {
           margin-top: 1rem;
         }
@@ -274,7 +313,7 @@ const Search = () => {
             border-radius: 5px;
             font-weight: bold;
             padding: 3px 8px;
-            margin-left: 10px;
+            margin: 5px;
         }
         button:hover {
             background-color: rgb(194,65,12);
