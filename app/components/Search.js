@@ -156,7 +156,7 @@ const Search = () => {
       </div>
       <div className='grid'>
         {photos.length > 0 && photos.map((photo, index) => (
-          <div key={index}>
+           <div key={index}>
             <a onClick={()=>openModal(photo, index)}>
               <img src={photo.src} alt={photo.title} />
               <p>{photo.title}</p>
@@ -179,7 +179,7 @@ const Search = () => {
             className="imgModal"
           />
           <h1 className="h1Modal">{truncateTitle(photo.title)}</h1>
-          <div className="description">{truncateDescription(photo.description)}</div>
+          <div className="description" dangerouslySetInnerHTML={{ __html: truncateDescription(photo.description) }}></div>
           <div className="dateupload">Uploaded: {photo.dateupload}</div>
           <div className="nextButtonsContainer">
             <button className="previous" onClick={()=>handlePrevious()}>Previous</button>
@@ -307,6 +307,9 @@ const Search = () => {
         p {
           margin-top: 6px;
         }
+        a {
+          cursor: pointer;
+        }
         button {
             background-color: rgb(249,115,22);
             color: white;
@@ -319,9 +322,6 @@ const Search = () => {
             background-color: rgb(194,65,12);
         }
         .buttonInput {
-        }
-        div:hover {
-            cursor: pointer;
         }
       `}</style>
     </>
