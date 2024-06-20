@@ -55,11 +55,17 @@ const Search = () => {
   };  
 
   const truncateDescription = (text) => {
+
     if (text?.length > 1200) {
       return text.substring(0, 1200) + ' . . .';
     }
     return text;
   };  
+
+  const getEditedDescription = (text) => {
+    const result = text.replaceAll('<a href', '<a target=”_blank” href')
+    return result
+  }
 
   const getDateupload = (timestamp) => {
     const milliseconds = timestamp * 1000;
@@ -81,7 +87,7 @@ const Search = () => {
           id: photo.id,
           src: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
           title: photo.title,
-          description: photo.description._content,
+          description: getEditedDescription(photo.description._content),
           dateupload: getDateupload(photo.dateupload)
         };
       });
@@ -103,11 +109,12 @@ const Search = () => {
           id: photo.id,
           src: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
           title: photo.title,
-          description: photo.description._content,
+          description: getEditedDescription(photo.description._content),
           dateupload: getDateupload(photo.dateupload)
         };
       });
       setPhotos(photos);
+      console.log('photos:', photos)
     } catch (error) {
       console.error("Error fetching data from Flickr API", error);
     }
@@ -125,7 +132,7 @@ const Search = () => {
           id: photo.id,
           src: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
           title: photo.title,
-          description: photo.description._content,
+          description: getEditedDescription(photo.description._content),
           dateupload: getDateupload(photo.dateupload)
         };
       });

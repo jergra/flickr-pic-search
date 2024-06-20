@@ -13,12 +13,3 @@ in a new page rather than a modal.
 
 deployed:
     https://flickr-pic-search.vercel.app/
-
-
-
-
-
-    
-
-
-
