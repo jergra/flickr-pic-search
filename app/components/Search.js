@@ -190,11 +190,16 @@ const Search = () => {
           <h1 className="h1Modal">{truncateTitle(photo.title)}</h1>
           <div className="description" dangerouslySetInnerHTML={{ __html: truncateDescription(photo.description) }}></div>
           <div className="dateupload">Uploaded: {photo.dateupload}</div>
-          <div className="nextButtonsContainer">
-            <button className="previous" onClick={()=>handlePrevious()}>Previous</button>
-            <button className="next" onClick={()=>handleNext()}>Next</button>
+          <div className="scrollArrowsContainer">
+            <div className="previousContainer" onClick={()=>handlePrevious()}>
+              <div className="previous"></div>
+              <div className="previousCover"></div>
+            </div>
+            <div className="nextContainer" onClick={()=>handleNext()}>
+              <div className="nextCover"></div>
+              <div className="next"></div>
+            </div>
           </div>
-          
         </div>
       </Modal>
 
@@ -287,27 +292,55 @@ const Search = () => {
           margin-top: 2rem;
           font-size: 20px;
         }
-        .nextButtonsContainer {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          margin-top: 20px;
-        }
-        .next {
-          position: absolute;
-          bottom: 10px;
-          right: 10px;
-        }
-        .previous {
-          position: absolute;
-          bottom: 10px;
-          left: 10px;
-        }
         .description {
           margin-top: 1rem;
         }
         .dateupload {
           margin-top: 1rem;
+        }
+        .scrollArrowsContainer {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        }
+        .nextContainer {
+          display: flex;
+        }
+        .next {
+          background-color: rgb(249,115,22);
+          width: 30px;
+          height: 30px;
+          transform: rotate(45deg);
+        }
+        .nextCover {
+          background-color: #111;
+          width: 30px;
+          height: 30px;
+          transform: rotate(45deg);
+          margin-right: -16px;
+          z-index: 10;
+        }
+        .next:hover {
+            background-color: rgb(194,65,12);
+        }
+        .previousContainer {
+          display: flex;
+        }
+        .previous {
+          background-color: rgb(249,115,22);
+          width: 30px;
+          height: 30px;
+          transform: rotate(45deg);
+        }
+        .previousCover {
+          background-color: #111;
+          width: 30px;
+          height: 30px;
+          transform: rotate(45deg);
+          margin-left: -16px;
+        }
+        .previous:hover {
+            background-color: rgb(194,65,12);
         }
         img {
           width: 100%;
@@ -329,9 +362,7 @@ const Search = () => {
         }
         button:hover {
             background-color: rgb(194,65,12);
-        }
-        .buttonInput {
-        }
+        }  
       `}</style>
     </>
   );
