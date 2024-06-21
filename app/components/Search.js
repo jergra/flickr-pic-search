@@ -54,14 +54,6 @@ const Search = () => {
     return text;
   };  
 
-  const truncateDescription = (text) => {
-
-    if (text?.length > 1200) {
-      return text.substring(0, 1200) + ' . . .';
-    }
-    return text;
-  };  
-
   const getEditedDescription = (text) => {
     const result = text.replaceAll('<a href', '<a target=”_blank” href')
     return result
@@ -188,17 +180,15 @@ const Search = () => {
             className="imgModal"
           />
           <h1 className="h1Modal">{truncateTitle(photo.title)}</h1>
-          <div className="description" dangerouslySetInnerHTML={{ __html: truncateDescription(photo.description) }}></div>
+          <div className="description" dangerouslySetInnerHTML={{ __html: photo.description }}></div>
           <div className="dateupload">Uploaded: {photo.dateupload}</div>
-          <div className="scrollArrowsContainer">
-            <div className="previousContainer" onClick={()=>handlePrevious()}>
-              <div className="previous"></div>
-              <div className="previousCover"></div>
-            </div>
-            <div className="nextContainer" onClick={()=>handleNext()}>
-              <div className="nextCover"></div>
-              <div className="next"></div>
-            </div>
+          <div className="previousContainer" onClick={()=>handlePrevious()}>
+            <div className="previous"></div>
+            <div className="previousCover"></div>
+          </div>
+          <div className="nextContainer" onClick={()=>handleNext()}>
+            <div className="nextCover"></div>
+            <div className="next"></div>
           </div>
         </div>
       </Modal>
@@ -254,7 +244,6 @@ const Search = () => {
           border-radius: 5px;
           background-color: #eee;
           cursor: pointer;
-          transition: background-color 0.2s ease-in-out;
           color: black;
         }
         input:hover {
@@ -268,21 +257,20 @@ const Search = () => {
         .modal {
           position: relative;
           background-color: #111;
-          position: relative;
           height: 90vh;
           width: 70vw;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 20px;
           font-family: 'Open Sans', sans-serif;
           color: white;
         }
         .modalButton {
           position: absolute;
-          top: 10px;
-          right: 10px;
+          top: 0px;
+          right: 0px;
+          margin: 0px;
         }
         .imgModal {
           width: auto;
@@ -294,16 +282,19 @@ const Search = () => {
         }
         .description {
           margin-top: 1rem;
+          margin-bottom: 5px;
+          min-height: 3em;
+          max-height: 7em; 
+          overflow-y: auto;
+          padding-right: 5px; 
         }
         .dateupload {
           margin-top: 1rem;
         }
-        .scrollArrowsContainer {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-        }
         .nextContainer {
+          position: absolute;
+          right: 0px;
+          bottom: 0px;
           display: flex;
         }
         .next {
@@ -325,6 +316,9 @@ const Search = () => {
         }
         .previousContainer {
           display: flex;
+          position: absolute;
+          left: 0px;
+          bottom: 0px;
         }
         .previous {
           background-color: rgb(249,115,22);
