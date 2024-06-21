@@ -92,6 +92,7 @@ const Search = () => {
         };
       });
       setPhotos(photos);
+      console.log('photos:', photos)
     } catch (error) {
       console.error("Error fetching data from Flickr API", error);
     }
@@ -137,6 +138,7 @@ const Search = () => {
         };
       });
       setPhotos(photos);
+      console.log('photos:', photos)
     } catch (error) {
       console.error("Error fetching data from Flickr API", error);
     }
