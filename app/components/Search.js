@@ -173,7 +173,7 @@ const Search = () => {
         style={customStyles}
       >
         <div className="modal">
-          <button className="modalButton" onClick={closeModal}>Close</button>
+          <button className="modalButton" onClick={closeModal}>X</button>
           <img 
             src={photo.src} 
             alt={truncateTitle(photo.title)}
