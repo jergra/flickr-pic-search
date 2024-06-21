@@ -271,6 +271,7 @@ const Search = () => {
           top: 0px;
           right: 0px;
           margin: 0px;
+          font-weight: normal;
         }
         .imgModal {
           width: auto;
