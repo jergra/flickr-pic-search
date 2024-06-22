@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import words from './words'
+import words from '../lib/words'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const customStyles = {
   content: {
@@ -208,7 +210,9 @@ const Search = () => {
         style={customStyles}
       >
         <div className="modal">
-          <button className="modalButton" onClick={closeModal}>X</button>
+          <button className="modalButton" onClick={closeModal}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
           <img 
             src={photo.src} 
             alt={truncateTitle(photo.title)}
@@ -315,12 +319,11 @@ const Search = () => {
         }
         .modalButton {
           position: absolute;
-          top: 0px;
-          right: 0px;
-          margin: 0px;
-          font-weight: normal;
-          font-size: large;
-          padding: 0 7px 0 7px;
+          top: 0;
+          right: 0;
+          border: none;
+          font-size: 20px;
+          cursor: pointer;
         }
         .imgModal {
           width: auto;
@@ -336,7 +339,7 @@ const Search = () => {
           min-height: 3em;
           max-height: 7em; 
           overflow-y: auto;
-          padding-right: 5px; 
+          padding-right: 5px;
         }
         .dateupload {
           margin-top: 1rem;

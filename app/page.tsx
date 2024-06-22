@@ -1,10 +1,14 @@
 'use client'
 
+import Head from 'next/head';
 import Search from './components/Search';
 
 export default function Home() {
   return (
     <main>
+      <Head>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+      </Head>
         <h1>Flickr Pic Search</h1>
         <Search />
       
@@ -24,8 +28,18 @@ export default function Home() {
           color: white;
         }
         h1 {
-          font-size: 40px;
+          font-size: 60px;
           font-weight: bold;
+          font-family: 'Pacifico', cursive; /* New font */
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow */
+          //background: linear-gradient(45deg, #ff6b6b, #f06595); /* Gradient text */
+          background: linear-gradient(45deg, rgb(249,115,22), rgb(194,65,12)); /* Gradient text */
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin: 20px 0; /* Adjust margin */
+          padding: 10px 20px; /* Adjust padding */
+          border-radius: 10px; /* Rounded corners */
+          background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
         }
       `}</style>
     </main>
