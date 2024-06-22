@@ -25,7 +25,28 @@ const Search = () => {
   const [theIndex, setTheIndex] = useState(null)
   const [modalIsOpen, setIsOpen] = useState(false);
   const [randomTerms, setRandomTerms] = useState('');
-  
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 1500) {
+        setShowTop(true)
+      } else {
+        setShowTop(false)
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   useEffect(() => {
     // Fetch images with random words on initial render
     const randomWords = getRandomWords();
@@ -206,6 +227,18 @@ const Search = () => {
           </div>
         </div>
       </Modal>
+
+      {showTop ? (
+        <div className='fixed bottom-5 right-5'>
+          <button 
+            onClick={goToTop}
+          >
+            Top
+          </button>
+        </div>
+      ) : (
+        <div></div>
+      )}
 
       <style jsx>{`
         .formAndButtonsContainer {
