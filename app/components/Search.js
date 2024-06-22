@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
+import words from './words'
 
 const customStyles = {
   content: {
@@ -17,13 +18,27 @@ const customStyles = {
 };
 
 const Search = () => {
+
   const [query, setQuery] = useState('');
   const [photos, setPhotos] = useState([]);
   const [photo, setPhoto] = useState({})
   const [theIndex, setTheIndex] = useState(null)
-
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [randomTerms, setRandomTerms] = useState('');
   
+  useEffect(() => {
+    // Fetch images with random words on initial render
+    const randomWords = getRandomWords();
+    setRandomTerms(randomWords.join(' '));
+    handleSearch(randomWords.join(' '));
+  }, []);
+
+  const getRandomWords = () => {
+    const randomCount = Math.floor(Math.random() * 2) + 1; // 1 or 2
+    const shuffled = words.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, randomCount);
+  };
+
   function openModal(photo, index) {
     setIsOpen(true);
     setPhoto(photo)
@@ -66,8 +81,7 @@ const Search = () => {
     return humanReadableDate
   }
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const handleSearch = async (query) => {
     const apiKey = process.env.NEXT_PUBLIC_FLICKR_API_KEY;
     const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&extras=description,date_upload&format=json&per_page=60&nojsoncallback=1`;
    
@@ -140,12 +154,12 @@ const Search = () => {
     <>
       <div className="formAndButtonsContainer">
         <div className="formContainer">
-          <form onSubmit={handleSearch}>
+          <form onSubmit={(e) => {e.preventDefault(); handleSearch(query);}}>
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="search terms"
+              placeholder={randomTerms ? randomTerms : 'search terms'}
             />
             <button type="submit" className="buttonInput">Search</button>
           </form>
@@ -366,3 +380,4 @@ const Search = () => {
 };
 
 export default Search;
+
