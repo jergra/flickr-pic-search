@@ -6,8 +6,10 @@ import Search from './components/Search';
 export default function Home() {
   return (
     <main>
-        <h1>Flickr Pic Search</h1>
-        <Search />
+      <div className="headerContainer">
+        <div>F l i c k r</div><div>P i c s</div>
+      </div>
+      <Search />
       
       <style jsx>{`
         main {
@@ -24,10 +26,22 @@ export default function Home() {
           font-family: 'Open Sans', sans-serif;
           color: white;
         }
-        h1 {
-          font-size: 40px;
-          font-weight: bold;
+        .headerContainer {
+          font-size: 50px;
+          font-weight: 100;
           margin-bottom: 20px;
+          display: flex;
+          justify-content: space-evenly;
+          width: 45%;
+        }
+         @media only screen and (max-width: 900px) {
+         .headerContainer  {
+            font-size: 35px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
         }
       `}</style>
     </main>

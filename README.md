@@ -1,6 +1,6 @@
 June 19, 2024
 
-dev/flickr-pic-search
+dev/flickr-pics
 
 Retrieves images from Flickr matching a search query.
 Images can also be retrieved by the criteria of 'Interesting'
@@ -12,6 +12,6 @@ With app/components/SearchORIGINAL.js the clicked photo opens
 in a new page rather than a modal.
 
 deployed:
-    https://flickr-pic-search.vercel.app/
+    https://flickr-pics.vercel.app/
 
 
