@@ -1,4 +1,3 @@
-
 'use client'
 
 import Search from './components/Search';
@@ -23,12 +22,11 @@ export default function Home() {
           background-position: center;
           background-blend-mode: multiply;
           background-color: rgba(5, 5, 5, 0.90); /* adjust opacity here */
-          font-family: 'Open Sans', sans-serif;
           color: white;
         }
         .headerContainer {
           font-size: 50px;
-          font-weight: 100;
+          font-weight: 200;
           margin-bottom: 20px;
           display: flex;
           justify-content: space-evenly;

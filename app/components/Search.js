@@ -296,6 +296,7 @@ const Search = () => {
           background-color: #eee;
           cursor: pointer;
           color: black;
+          font-family: sans serif;
         }
         input:hover {
           background-color: white;
@@ -304,6 +305,7 @@ const Search = () => {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
           gap: 1rem;
+          font-family: sans serif;
         }
         .modal {
           position: relative;
@@ -406,6 +408,7 @@ const Search = () => {
             font-weight: bold;
             padding: 3px 8px;
             margin: 5px;
+            font-family: sans serif;
         }
         button:hover {
             background-color: rgb(194,65,12);
