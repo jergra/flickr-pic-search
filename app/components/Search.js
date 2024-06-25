@@ -176,17 +176,15 @@ const Search = () => {
   return (
     <>
       <div className="formAndButtonsContainer">
-        <div className="formContainer">
-          <form onSubmit={(e) => {e.preventDefault(); handleSearch(query);}}>
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={randomTerms ? randomTerms : 'search terms'}
-            />
-            <button type="submit" className="buttonInput">Search</button>
-          </form>
-        </div>
+        <form onSubmit={(e) => {e.preventDefault(); handleSearch(query);}}>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={randomTerms ? randomTerms : 'search terms'}
+          />
+          <button type="submit">Search</button>
+        </form>
         <div className="buttonsContainer">
           <button onClick={()=>handleInteresting()}>Interesting</button>
           <button onClick={()=>handleRecent()}>Recent</button>
@@ -255,8 +253,8 @@ const Search = () => {
         @media only screen and (max-width: 900px) {
          .formAndButtonsContainer  {
             margin-top: 1rem;
-            margin-bottom: 2rem;
-            width: 60%;
+            margin-bottom: 3rem;
+            width: 100%;
             display: flex;
             flex-direction: column;
             height: 80px;
@@ -272,24 +270,24 @@ const Search = () => {
          .buttonsContainer  {
             width: 100%;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
           }
         }
-        .formContainer {
+        form {
           width: 70%;
           display: flex;
         }
         @media only screen and (max-width: 900px) {
-         .formContainer  {
+         form {
             width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
           }
         }
         input {
           font-size: 18px;
-          padding: 2px 8px;
+          padding-left: 8px;
           margin-right: 5px;
           border: none;
           border-radius: 5px;

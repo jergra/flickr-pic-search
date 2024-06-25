@@ -34,7 +34,7 @@ export default function Home() {
         }
          @media only screen and (max-width: 900px) {
          .headerContainer  {
-            font-size: 35px;
+            font-size: 40px;
             width: 100%;
             display: flex;
             flex-direction: column;
