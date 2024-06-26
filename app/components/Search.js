@@ -3,21 +3,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import words from '../lib/words'
+import customStyles from '../lib/customStyles'
+import getRandomWords from '../utils/getRandomWords'
+import getDateUploaded from '../utils/getDateUploaded'
+import getEditedDescription from '../utils/getEditedDescription'
+import truncateTitle from '../utils/truncateTitle'
+import goToTop from '../utils/goToTop'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    background: '#111'
-  },
-};
 
 const Search = () => {
 
@@ -42,35 +35,19 @@ const Search = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const goToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
   useEffect(() => {
     // Fetch images with random words on initial render
     const randomWords = getRandomWords();
     setRandomTerms(randomWords.join(' '));
     handleSearch(randomWords.join(' '));
   }, []);
-
-  const getRandomWords = () => {
-    const randomCount = Math.floor(Math.random() * 2) + 1; // 1 or 2
-    const shuffled = words.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, randomCount);
-  };
-
+  
   function openModal(photo, index) {
     setIsOpen(true);
     setPhoto(photo)
     setTheIndex(index)
   }
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+  
   const handleNext = () => {
     if (theIndex < photos.length - 1) {
       setPhoto(photos[theIndex + 1])
@@ -85,25 +62,6 @@ const Search = () => {
     }
   }
   
-  const truncateTitle = (text) => {
-    if (text?.length > 500) {
-      return text.substring(0, 500) + ' . . .';
-    }
-    return text;
-  };  
-
-  const getEditedDescription = (text) => {
-    const result = text.replaceAll('<a href', '<a target=”_blank” href')
-    return result
-  }
-
-  const getDateupload = (timestamp) => {
-    const milliseconds = timestamp * 1000;
-    const dateObject = new Date(milliseconds);
-    const humanReadableDate = dateObject.toISOString().slice(0, 16).replace('T', ' ');
-    return humanReadableDate
-  }
-
   const handleSearch = async (query) => {
     const apiKey = process.env.NEXT_PUBLIC_FLICKR_API_KEY;
     const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&extras=description,date_upload&format=json&per_page=60&nojsoncallback=1`;
@@ -117,7 +75,7 @@ const Search = () => {
           src: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
           title: photo.title,
           description: getEditedDescription(photo.description._content),
-          dateupload: getDateupload(photo.dateupload)
+          dateUploaded: getDateUploaded(photo.dateupload)
         };
       });
       setPhotos(photos);
@@ -127,9 +85,16 @@ const Search = () => {
     }
   };
 
-  const handleInteresting = async () => {
+  const handleClick = async (buttonChoice) => {
+    let apiChoice = ''
+    if (buttonChoice == 'interesting') {
+      apiChoice = 'flickr.interestingness.getList'
+    }
+    if (buttonChoice == 'recent') {
+      apiChoice = 'flickr.photos.getRecent'
+    }
     const apiKey = process.env.NEXT_PUBLIC_FLICKR_API_KEY;
-    const url = `https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=${apiKey}&extras=description,date_upload&format=json&per_page=60&nojsoncallback=1`;
+    const url = `https://api.flickr.com/services/rest/?method=${apiChoice}&api_key=${apiKey}&extras=description,date_upload&format=json&per_page=60&nojsoncallback=1`;
 
     try {
       const response = await axios.get(url);
@@ -140,30 +105,7 @@ const Search = () => {
           src: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
           title: photo.title,
           description: getEditedDescription(photo.description._content),
-          dateupload: getDateupload(photo.dateupload)
-        };
-      });
-      setPhotos(photos);
-      console.log('photos:', photos)
-    } catch (error) {
-      console.error("Error fetching data from Flickr API", error);
-    }
-  };
-
-  const handleRecent = async () => {
-    const apiKey = process.env.NEXT_PUBLIC_FLICKR_API_KEY;
-    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=${apiKey}&extras=description,date_upload&format=json&per_page=60&nojsoncallback=1`;
-
-    try {
-      const response = await axios.get(url);
-      console.log('response:', response)
-      const photos = response.data.photos.photo.map(photo => {
-        return {
-          id: photo.id,
-          src: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-          title: photo.title,
-          description: getEditedDescription(photo.description._content),
-          dateupload: getDateupload(photo.dateupload)
+          dateUploaded: getDateUploaded(photo.dateupload)
         };
       });
       setPhotos(photos);
@@ -186,8 +128,8 @@ const Search = () => {
           <button type="submit">Search</button>
         </form>
         <div className="buttonsContainer">
-          <button onClick={()=>handleInteresting()}>Interesting</button>
-          <button onClick={()=>handleRecent()}>Recent</button>
+          <button onClick={()=>handleClick('interesting')}>Interesting</button>
+          <button onClick={()=>handleClick('recent')}>Recent</button>
         </div>
       </div>
       <div className='grid'>
@@ -203,12 +145,11 @@ const Search = () => {
 
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
         ariaHideApp={false}
         style={customStyles}
       >
         <div className="modal">
-          <button className="modalButton" onClick={closeModal}>
+          <button className="modalButton" onClick={()=>setIsOpen(false)}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <img 
@@ -218,7 +159,7 @@ const Search = () => {
           />
           <h1 className="h1Modal">{truncateTitle(photo.title)}</h1>
           <div className="description" dangerouslySetInnerHTML={{ __html: photo.description }}></div>
-          <div className="dateupload">Uploaded: {photo.dateupload}</div>
+          <div className="dateUploaded">Uploaded: {photo.dateUploaded}</div>
           <div className="previousContainer" onClick={()=>handlePrevious()}>
             <div className="previous"></div>
             <div className="previousCover"></div>
@@ -341,7 +282,7 @@ const Search = () => {
           overflow-y: auto;
           padding-right: 5px;
         }
-        .dateupload {
+        .dateUploaded {
           margin-top: 1rem;
         }
         .nextContainer {
